@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <script>try{if(localStorage.getItem('lb_theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LikeBoost — ปั้มไลค์ราคาถูก</title>
+  <meta name="description" content="บริการเพิ่มไลค์ ผู้ติดตาม วิว ทุกโซเชียลมีเดีย ราคาถูก ส่งเร็ว ทำงานอัตโนมัติ 24 ชั่วโมง" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="apple-touch-icon" href="/icon-180.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#f4511e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="LikeBoost" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css?v=79" />
+</head>
+<body>
+  <!-- แถบประกาศวิ่ง -->
+  <div class="announce"><div class="announce-track"><span id="tagline">แจ้งประกาศจากร้านได้ที่หน้าแอดมิน</span><span id="tagline2"></span></div></div>
+
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <img class="logo-img" src="/logo.png?v=2" alt="โลโก้" />
+        <span id="siteName">LikeBoost</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#home" class="active" data-nav="home">บริการ</a>
+        <a href="#orders" data-nav="orders">คำสั่งซื้อของฉัน</a>
+        <a href="#topup" data-nav="topup">เติมเงิน</a>
+        <a href="#profile" data-nav="profile">โปรไฟล์</a>
+      </nav>
+      <div class="nav-right">
+        <button class="btn btn-ghost btn-sm icon-btn" id="bellBtn" title="การแจ้งเตือนจากแอดมิน" aria-label="การแจ้งเตือน" style="position:relative">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <span class="bell-badge" id="bellBadge" style="display:none"></span>
+        </button>
+        <button class="btn btn-ghost btn-sm icon-btn" id="themeBtn" title="สลับโหมดมืด / สว่าง" aria-label="สลับโหมดมืดหรือสว่าง"><svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+        <span class="balance-chip" id="balanceChip" style="display:none"><span class="lbl">เครดิต</span><span id="balanceAmt">0.00</span>฿</span>
+        <button class="btn btn-primary btn-sm" id="authBtn">เข้าสู่ระบบ / สมัคร</button>
+        <button class="btn btn-ghost btn-sm" id="logoutBtn" style="display:none">ออกจากระบบ</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= หน้าบริการ ================= -->
+  <section class="view active" id="view-home">
+    <div class="hero-wrap">
+      <div class="container hero">
+        <div class="hero-logo"><img src="/logo.png?v=2" alt="LikeBoost" /></div>
+        <div>
+          <h1>เพิ่มไลค์ ยอดวิว ผู้ติดตาม<br /><em>ราคาถูกที่สุด</em> จบในที่เดียว</h1>
+          <p class="sub">ทุกแพลตฟอร์ม ทั้ง Facebook, Instagram, TikTok — สั่งผ่านระบบอัตโนมัติ 24 ชั่วโมง เริ่มต้นเพียง 5 บาท</p>
+          <p class="stats-line">
+            บริการ <b id="statServices">0</b> รายการ <span class="sep">|</span> สั่งแล้วเริ่มงานเร็ว <span class="sep">|</span> ชำระด้วยเครดิต อัตโนมัติทันที
+          </p>
+          <div class="hero-search">
+            <span class="icon">&#9906;</span>
+            <input type="text" id="searchInputTop" placeholder="ค้นหาบริการ เช่น ไลค์ Facebook, วิว TikTok, คนไทย" />
+          </div>
+        </div>
+        <aside class="hero-side">
+          <div class="howto">
+          <h3>สั่งงานง่าย ๆ 3 ขั้นตอน</h3>
+          <ol>
+            <li><span class="num">1</span><span><b>เลือกบริการ</b> ที่ต้องการจากรายการด้านล่าง</span></li>
+            <li><span class="num">2</span><span><b>วางลิงก์</b>โพสหรือโปรไฟล์ ใส่จำนวนที่ต้องการ</span></li>
+            <li><span class="num">3</span><span><b>ยืนยันสั่งซื้อ</b> ระบบทำงานทันที ติดตามได้เรื่อย ๆ</span></li>
+          </ol>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- สรุปจุดขายแบบบรรทัดเดียว -->
+    <div class="container">
+      <p class="trust-line">บริการกว่า <b id="statServices2">1,600</b> รายการ &middot; ระบบอัตโนมัติ 24 ชม. &middot; เริ่มต้น 5 บาท &middot; สั่งไม่สำเร็จคืนเงินเต็มจำนวน</p>
+      <button type="button" class="read-first-home" id="igReadHomeBtn">
+        <span class="rfh-icon">!</span>
+        <span>โปรดอ่านก่อนเพิ่มผู้ติดตาม Instagram — กดเพื่อดูรายละเอียด</span>
+      </button>
+    </div>
+
+    <div class="container section">
+      <!-- แท็บแพลตฟอร์ม -->
+      <div class="platform-tabs" id="platformTabs"></div>
+      <!-- หมวดย่อย -->
+      <div class="cat-chips" id="catChips"></div>
+      <!-- กรองบริการที่ปิดอยู่ -->
+      <div class="view-opts"><button class="chip" id="hideClosedBtn"></button></div>
+      <!-- ค้นหา -->
+      <div class="search-bar">
+        <span class="icon">&#9906;</span>
+        <input type="text" id="searchInput" placeholder="ค้นหาบริการ เช่น ไลค์, วิว, คนไทย..." />
+      </div>
+      <!-- การ์ดบริการ -->
+      <div class="svc-grid" id="svcGrid"></div>
+      <div class="empty" id="svcEmpty" style="display:none">ไม่พบบริการที่ค้นหา ลองเปลี่ยนคำหรือเลือกหมวดอื่น</div>
+    </div>
+
+    <!-- คำถามที่พบบ่อย -->
+    <div class="container section">
+      <h2 class="section-title">คำถามที่พบบ่อย</h2>
+      <div class="faq">
+        <details>
+          <summary>โอนเงินแล้วได้เครดิตเมื่อไหร่?</summary>
+          <div class="faq-body">แจ้งชำระเงินพร้อมแนบสลิปในหน้าเติมเงิน แอดมินตรวจสอบและเติมเครดิตให้ โดยปกติไม่นาน หากใจรอไม่ไหวทักแอดมินได้ตลอด 24 ชม.</div>
+        </details>
+        <details>
+          <summary>ต้องให้รหัสผ่านโซเชียลไหม?</summary>
+          <div class="faq-body">ไม่ต้องเด็ดขาด ระบบใช้เพียง "ลิงก์" โพสต์/โปรไฟล์/วิดีโอแบบสาธารณะเท่านั้น ห้ามส่งรหัสผ่านให้ใครเด็ดขาด</div>
+        </details>
+        <details>
+          <summary>ราคาถูกกว่ารายอื่นได้อย่างไร?</summary>
+          <div class="faq-body">เราทำงานแบบอัตโนมัติทั้งหมด ตัดต้นทุนพนักงานและขั้นตอนกลาง จึงส่งราคาถูกให้ลูกค้าได้โดยตรง พร้อมกำไรที่แฟร์</div>
+        </details>
+        <details>
+          <summary>ถ้าสั่งแล้วงานไม่เข้าล่ะ?</summary>
+          <div class="faq-body">ระบบคืนเครดิตให้อัตโนมัติทันทีที่สั่งไม่สำเร็จ ไม่มีความเสี่ยงเสียเงินฟรี และหากผู้ให้บริการคืนเงินรายการใดภายหลัง ระบบคืนเครดิตให้เต็มจำนวนเช่นกัน</div>
+        </details>
+        <details>
+          <summary>ปลอดภัยกับบัญชีฉันไหม?</summary>
+          <div class="faq-body">ปลอดภัย ไม่ต้องโอนเงินผ่านเพจที่ไหน ทุกอย่างทำในระบบนี้ มีสลิปและประวัติการใช้จ่ายบันทึกไว้ในบัญชีของคุณตลอด</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= คำสั่งซื้อของฉัน ================= -->
+  <section class="view" id="view-orders">
+    <div class="container section">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:6px">
+        <h2 class="section-title" style="margin:0">คำสั่งซื้อของฉัน</h2>
+        <button class="btn btn-ghost btn-sm" id="refreshOrdersBtn">รีเฟรชสถานะ</button>
+      </div>
+      <p style="color:var(--muted);margin:6px 0 14px;font-size:.86rem">สถานะจะอัปเดตอัตโนมัติเมื่อเปิดหน้านี้ (ทุก 90 วินาทีต่อรายการ)</p>
+      <div id="ordersBox"></div>
+    </div>
+  </section>
+
+  <!-- ================= เติมเงิน ================= -->
+  <section class="view" id="view-topup">
+    <div class="container section">
+      <h2 class="section-title">เติมเครดิต</h2>
+      <div class="two-col">
+        <div class="panel">
+          <h3>โอนผ่านพร้อมเพย์</h3>
+          <p style="color:var(--muted);font-size:.88rem;margin:2px 0 6px">สแกน QR ด้วยแอปธนาคาร จ่ายตามยอด แล้วกดแจ้งชำระเงิน แอดมินจะเติมเครดิตให้</p>
+          <div class="amount-chips" id="amountChips"></div>
+          <div class="field">
+            <label>หรือพิมพ์ยอดเอง (ขั้นต่ำ <span id="topupMinLbl">10</span> บาท)</label>
+            <input type="number" id="customAmount" min="10" step="1" placeholder="เช่น 350" />
+          </div>
+          <button class="btn btn-primary" id="genQrBtn" style="width:100%">สร้าง QR พร้อมเพย์</button>
+          <div id="qrArea" style="display:none">
+            <div class="qr-box"><div id="qrTarget"></div></div>
+            <p style="text-align:center;color:var(--muted);font-size:.83rem">เปิดแอปธนาคาร สแกนจ่ายตามยอดที่ระบุ</p>
+            <div class="field">
+              <label>ข้อความอ้างอิง (เช่น เวลาโอน / 4 ตัวท้ายบัญชี)</label>
+              <input type="text" id="slipRef" placeholder="เช่น 14:32 / 1234" />
+            </div>
+            <div class="field">
+              <label>แนบรูปสลิปการโอน (ช่วยให้อนุมัติเร็วขึ้น)</label>
+              <div class="slip-upload" id="slipDrop">
+                <input type="file" id="slipFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden />
+                <button class="btn btn-ghost btn-sm" id="slipPickBtn" type="button">เลือกรูปสลิป</button>
+                <span class="slip-hint" id="slipHint">PNG / JPG ไม่เกิน ~3MB</span>
+              </div>
+              <div class="slip-preview" id="slipPreview" style="display:none">
+                <img id="slipPreviewImg" alt="ตัวอย่างสลิป" />
+                <button class="btn btn-danger btn-sm" id="slipRemoveBtn" type="button">ลบรูป</button>
+              </div>
+            </div>
+            <button class="btn btn-success" id="confirmTopupBtn" style="width:100%">แจ้งชำระเงินแล้ว</button>
+          </div>
+          <p id="lineContact" style="margin-top:12px;color:var(--muted);font-size:.84rem"></p>
+        </div>
+        <div>
+          <div class="panel">
+            <h3 style="margin-bottom:10px">ประวัติการเติมเงิน</h3>
+            <div id="topupList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= โปรไฟล์ของฉัน ================= -->
+  <section class="view" id="view-profile">
+    <div class="container section">
+      <!-- การ์ดหัวโปรไฟล์: อวตาร + ชื่อ + เครดิตเด่น -->
+      <div class="pf-hero">
+        <div class="pf-avatar" id="pfAvatar">?</div>
+        <div class="pf-identity">
+          <h2 id="pfDisplayName">—</h2>
+          <div class="pf-sub"><span class="mono" id="pfUid"></span> <span id="pfUsername"></span></div>
+        </div>
+        <div class="pf-balance">
+          <span class="lbl">เครดิตคงเหลือ</span>
+          <b id="pfBalance">0.00</b><span class="unit">฿</span>
+          <a class="btn btn-primary btn-sm" href="#topup">เติมเงิน</a>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        <div>
+          <!-- สถิติแบบกริดใหม่ -->
+          <div class="pf-stat-grid" id="profileStats"></div>
+
+          <div class="panel" style="margin-bottom:16px">
+            <h3 style="margin-bottom:12px">ข้อมูลบัญชี</h3>
+            <div id="profileInfo"></div>
+          </div>
+
+          <div id="referralBox"></div>
+        </div>
+        <div>
+          <div class="panel" style="margin-bottom:16px">
+            <h3 style="margin-bottom:4px">แก้ไขข้อมูลส่วนตัว</h3>
+            <p style="color:var(--muted);font-size:.84rem;margin-bottom:12px">ชื่อและเบอร์ที่แอดมินใช้ติดต่อตอนตรวจออเดอร์และสลิป</p>
+            <div class="field"><label>ชื่อแสดง</label><input type="text" id="profileName" maxlength="60" /></div>
+            <div class="field"><label>เบอร์โทรศัพท์</label><input type="tel" id="profilePhone" maxlength="12" placeholder="0812345678" inputmode="numeric" /></div>
+            <button class="btn btn-primary btn-sm" id="saveNameBtn">บันทึกข้อมูล</button>
+          </div>
+          <div class="panel">
+            <h3 style="margin-bottom:4px">เปลี่ยนรหัสผ่าน</h3>
+            <p style="color:var(--muted);font-size:.84rem;margin-bottom:12px">ใช้รหัสผ่านปัจจุบันเพื่อยืนยันตัวตนก่อนเปลี่ยน</p>
+            <div class="field"><label>รหัสผ่านปัจจุบัน</label><input type="password" id="oldPw" autocomplete="current-password" /></div>
+            <div class="field"><label>รหัสผ่านใหม่ (อย่างน้อย 4 ตัว)</label><input type="password" id="newPw" autocomplete="new-password" /></div>
+            <div class="field"><label>ยืนยันรหัสผ่านใหม่</label><input type="password" id="newPw2" autocomplete="new-password" /></div>
+            <button class="btn btn-primary btn-sm" id="changePwBtn">เปลี่ยนรหัสผ่าน</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container foot-grid">
+      <div class="foot-brand">
+        <img src="/logo.png?v=2" alt="โลโก้" />
+        <div>
+          <b class="siteNameTxt">LikeBoost</b>
+          <span>ปั้มไลค์ วิว ฟอล ราคาถูก ส่งเร็ว อัตโนมัติ 24 ชม.</span>
+        </div>
+      </div>
+      <div class="foot-links">
+        <a href="#home">บริการ</a>
+        <a href="#orders">คำสั่งซื้อของฉัน</a>
+        <a href="#topup">เติมเงิน</a>
+        <a href="#profile">โปรไฟล์</a>
+      </div>
+      <div class="foot-pay">
+        <span class="fp-lbl">รับชำระผ่าน</span>
+        <span class="fp-chip">พร้อมเพย์</span>
+        <span class="fp-chip">Mobile Banking</span>
+      </div>
+    </div>
+    <div class="foot-copy">© <span id="year"></span> <span class="siteNameTxt">LikeBoost</span> — บริการเพิ่มยอดโซเชียลมีเดีย ใช้บริการถือว่ายอมรับเงื่อนไขของร้าน</div>
+  </footer>
+
+  <!-- ปุ่มแชทลอย: ลูกค้าติดต่อแอดมินได้จากทุกหน้า -->
+  <button id="contactFab" aria-label="ติดต่อแอดมิน" title="ติดต่อแอดมิน">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  </button>
+
+  <!-- ================= Modal: สั่งซื้อ ================= -->
+  <div class="modal-backdrop" id="orderModal">
+    <div class="modal">
+      <button class="modal-close" data-close="orderModal">&#10005;</button>
+      <h2>สั่งซื้อบริการ</h2>
+      <p class="sub" id="orderSvcName">—</p>
+      <div id="igReadFirstBox"></div>
+      <div id="orderLoginWarn"></div>
+      <div class="field">
+        <label>ลิงก์เป้าหมาย *</label>
+        <input type="url" id="orderLink" placeholder="https://www.facebook.com/..." />
+        <div class="hint" id="orderLinkHint">วางลิงก์โพส/โปรไฟล์/วิดีโอที่ต้องการ (ต้องเป็นแบบสาธารณะ)</div>
+      </div>
+      <div class="field">
+        <label>จำนวน *</label>
+        <input type="number" id="orderQty" />
+        <div class="hint" id="orderQtyHint">—</div>
+      </div>
+      <div class="price-box">
+        <div>
+          <span class="lbl">ยอดชำระ (หักจากเครดิต)</span>
+          <div class="formula" id="priceFormula"></div>
+        </div>
+        <span class="val" id="orderPrice">0.00 ฿</span>
+      </div>
+      <div class="desc-pre" id="orderDesc" style="display:none"></div>
+      <button class="btn btn-primary" id="submitOrderBtn" style="width:100%">ยืนยันคำสั่งซื้อ</button>
+    </div>
+  </div>
+
+  <!-- ================= Modal: เข้าสู่ระบบ ================= -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal" style="max-width:400px">
+      <button class="modal-close" data-close="authModal">&#10005;</button>
+      <h2>บัญชีผู้ใช้</h2>
+      <p class="sub">สมัครฟรี ไม่มีค่าใช้จ่าย เครดิตใช้ซื้อบริการได้ทันที</p>
+      <div class="tabs">
+        <button id="tabLogin" class="active">เข้าสู่ระบบ</button>
+        <button id="tabRegister">สมัครสมาชิก</button>
+      </div>
+      <div class="field"><label>ชื่อผู้ใช้</label><input type="text" id="authUsername" placeholder="อังกฤษ/ตัวเลข เช่น somchai99" autocomplete="username" /></div>
+      <div class="field"><label>รหัสผ่าน</label><input type="password" id="authPassword" placeholder="อย่างน้อย 4 ตัวอักษร" autocomplete="current-password" /></div>
+      <div class="field" id="nameField" style="display:none"><label>ชื่อเล่น (ไม่บังคับ)</label><input type="text" id="authName" placeholder="เช่น หนึ่ง" /></div>
+      <div class="field" id="phoneField" style="display:none"><label>เบอร์โทรศัพท์ *</label><input type="tel" id="authPhone" maxlength="12" placeholder="0812345678" inputmode="numeric" /><div class="hint">ใช้ติดต่อกรณะมีปัญหาออเดอร์</div></div>
+      <button class="btn btn-primary" id="authSubmitBtn" style="width:100%">เข้าสู่ระบบ</button>
+    </div>
+  </div>
+
+  <!-- ================= Modal: สั่งซื้อสำเร็จ ================= -->
+  <div class="modal-backdrop" id="doneModal">
+    <div class="modal" style="max-width:400px;text-align:center">
+      <h2 style="margin-top:6px">สั่งซื้อสำเร็จ</h2>
+      <p class="sub">ระบบกำลังดำเนินการ ติดตามความคืบหน้าได้ที่หน้าคำสั่งซื้อ</p>
+      <div style="background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px;margin-bottom:14px">
+        <div style="color:var(--muted);font-size:.78rem">เลขคำสั่งซื้อ</div>
+        <div style="font-size:1.3rem;font-weight:700;color:var(--brand)" id="doneOrderId">—</div>
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="closeModal('doneModal');location.hash='#orders'">ดูคำสั่งซื้อ</button>
+    </div>
+  </div>
+
+  <!-- Modal: โปรดอ่านก่อนเพิ่มผู้ติดตาม Instagram -->
+  <div class="modal-backdrop" id="igReadModal">
+    <div class="modal" style="max-width:440px">
+      <button class="modal-close" data-close="igReadModal">&#10005;</button>
+      <h2>โปรดอ่านก่อนเพิ่มผู้ติดตาม Instagram</h2>
+      <div class="rf-alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+        <div><b>คำแนะนำสำคัญ - Instagram</b><br />ก่อนจะเพิ่มผู้ติดตาม IG โปรดปิดฟังก์ชันคัดกรองเพื่อน (Flag) ก่อนทุกครั้ง ดังนี้</div>
+      </div>
+      <div class="rf-guide">
+        <div class="rf-step">
+          <span class="rf-num">1</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <div><b>ไปที่การตั้งค่าบัญชี</b><br />ของคุณ</div>
+        </div>
+        <div class="rf-step">
+          <span class="rf-num">2</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+          <div><b>เลือก Follow and</b><br /><b>Invite Friends</b></div>
+        </div>
+        <div class="rf-step">
+          <span class="rf-num">3</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg>
+          <div><b>ค้นหา Flag for Review</b><br />แล้ว<b style="color:var(--danger)">ยกเลิกเครื่องหมาย</b> ออก</div>
+        </div>
+      </div>
+      <img class="rf-photo" src="/img/ig-followers-info.jpg?v=1" alt="รายละเอียดบริการผู้ติดตาม Instagram" />
+      <div class="rf-note">หากไม่ทำการปิด ทางเว็บไซต์จะไม่รับผิดชอบต่อปัญหาที่เกิดขึ้น</div>
+      <button class="btn btn-primary" id="igReadOkBtn" style="width:100%;margin-top:6px">เข้าใจแล้ว</button>
+    </div>
+  </div>
+
+  <!-- Modal: ติดต่อแอดมิน (ระบบเคส — รายการเคส/ห้องแชท/เปิดเคสใหม่ โดย JS เรนเดอร์) -->
+  <div class="modal-backdrop" id="contactModal">
+    <div class="modal contact-modal" style="max-width:460px">
+      <button class="modal-close" data-close="contactModal">&#10005;</button>
+      <div id="contactBody"></div>
+    </div>
+  </div>
+
+  <!-- Modal: แนะนำเพื่อน รับเครดิตฟรี -->
+  <div class="modal-backdrop" id="refModal">
+    <div class="modal" style="max-width:440px">
+      <button class="modal-close" data-close="refModal">&#10005;</button>
+      <h2>แนะนำเพื่อน รับเครดิตฟรี</h2>
+      <p class="sub">แชร์ลิงก์ของคุณให้เพื่อน — เพื่อนได้ใช้บริการ คุณได้เครดิตฟรี</p>
+      <div id="refBody"></div>
+    </div>
+  </div>
+
+  <!-- แผงการแจ้งเตือน: ดรอปดาวน์ห้อยใต้ระฆัง -->
+  <div id="bellPanel" class="bell-panel" style="display:none">
+    <div class="bell-panel-head">
+      <b>การแจ้งเตือน</b>
+      <button id="bellPanelClose" aria-label="ปิด">&#10005;</button>
+    </div>
+    <div id="bellBody"></div>
+  </div>
+
+  <div id="toasts"></div>
+
+  <script src="/vendor/qrcode.min.js?v=19"></script>
+  <script src="/js/app.js?v=69"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- โลโก้แอดมิน LikeBoost: โล่ + ช่องล็อก -->
+  <defs>
+    <linearGradient id="shieldG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff6a3d"/>
+      <stop offset="1" stop-color="#e0400f"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#223041"/>
+  <path d="M64 18 L98 31 V61 C98 84 84 100 64 110 C44 100 30 84 30 61 V31 Z"
+        fill="url(#shieldG)"/>
+  <path d="M64 24 L92 35 V61 C92 80 81 94 64 103 C47 94 36 80 36 61 V35 Z"
+        fill="none" stroke="#ffffff" stroke-opacity="0.28" stroke-width="3"/>
+  <!-- ช่องล็อก -->
+  <circle cx="64" cy="60" r="10.5" fill="#ffffff"/>
+  <path d="M59.5 66 H68.5 L71 86 H57 Z" fill="#ffffff"/>
+  <!-- จุดมุมโล่ -->
+  <circle cx="64" cy="18" r="4" fill="#ffb38a"/>
+  <text x="64" y="126" font-family="Kanit, Arial, sans-serif" font-size="11" font-weight="600"
+        fill="#8fa0b3" text-anchor="middle" letter-spacing="3">ADMIN</text>
+</svg>

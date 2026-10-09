@@ -1,0 +1,13 @@
+{
+  "name": "LikeBoost — ปั้มไลค์ราคาถูก",
+  "short_name": "LikeBoost",
+  "description": "เพิ่มไลค์ ยอดวิว ผู้ติดตาม ทุกโซเชียล ราคาถูก สั่งอัตโนมัติ 24 ชม.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f4511e",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

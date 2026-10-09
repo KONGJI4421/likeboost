@@ -1,0 +1,14 @@
+{
+  "name": "like-boost-smm",
+  "version": "1.0.0",
+  "description": "เว็บปั้มโซเชียล (SMM Panel) — reseller ของ smm24hr partner API",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "scan": "node scripts/scan-services.mjs"
+  },
+  "dependencies": {
+    "web-push": "^3.6.7"
+  }
+}

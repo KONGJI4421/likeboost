@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <script>try{if(localStorage.getItem('lb_theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LB Admin — LikeBoost</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/admin-logo.svg" />
+  <link rel="apple-touch-icon" href="/admin-icon-180.png" />
+  <link rel="manifest" href="/admin-manifest.json" />
+  <meta name="theme-color" content="#223041" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="LB Admin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css?v=49" />
+  <!-- จองพื้นที่แถบเลื่อนถาวร — กันตารางขยับขนาดเมื่อสลับแท็บ (scrollbar โผล่/หาย) -->
+  <style>html { overflow-y: scroll; scrollbar-gutter: stable; }</style>
+</head>
+<body>
+  <!-- หน้าล็อกอินแอดมิน -->
+  <div id="adminLogin">
+    <div class="login-card">
+      <img src="/admin-logo.svg" alt="โลโก้แอดมิน" class="login-logo" />
+      <h2 class="login-title">หน้าแอดมิน</h2>
+      <p class="login-sub">สำหรับเจ้าของร้านเท่านั้น</p>
+      <label class="login-label" for="adminPw">รหัสผ่านแอดมิน</label>
+      <input type="password" id="adminPw" class="login-input" placeholder="••••••••" autocomplete="current-password" />
+      <button class="btn btn-primary login-btn" id="adminLoginBtn">เข้าสู่ระบบ</button>
+      <a href="/" class="login-back">← กลับหน้าร้าน</a>
+    </div>
+  </div>
+
+  <!-- แดชบอร์ด -->
+  <div id="adminApp" class="admin-wrap" style="display:none">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="logo"><img class="logo-img" src="/admin-logo.svg" alt="โลโก้แอดมิน" /><span>แดชบอร์ดแอดมิน</span></div>
+      <div style="margin-left:auto;display:flex;gap:10px">
+        <button class="btn btn-ghost btn-sm icon-btn" id="themeBtn" title="สลับโหมดมืด / สว่าง" aria-label="สลับโหมดมืดหรือสว่าง"><svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+        <a class="btn btn-ghost btn-sm" href="/">หน้าร้าน</a>
+        <button class="btn btn-danger btn-sm" id="adminLogoutBtn">ออกจากระบบ</button>
+      </div>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="active" data-tab="overview">ภาพรวม</button>
+      <button data-tab="settings">ตั้งค่า & กำไร</button>
+      <button data-tab="topups">เติมเงิน</button>
+      <button data-tab="orders">คำสั่งซื้อ</button>
+      <button data-tab="users">สมาชิก</button>
+      <button data-tab="contact">ติดต่อ<span class="tab-badge" id="contactBadge" style="display:none"></span></button>
+    </div>
+
+    <!-- ภาพรวม -->
+    <div class="view active" id="tab-overview">
+      <div class="kpi-grid" id="kpiGrid"></div>
+      <div class="panel">
+        <h3 style="margin-bottom:12px">การเชื่อมต่อ API ต้นทาง</h3>
+        <table class="api-status" style="width:100%;border-collapse:collapse;font-size:.9rem">
+          <tr>
+            <td style="padding:7px 0;color:var(--muted);width:170px">สถานะการเชื่อมต่อ</td>
+            <td style="padding:7px 0"><span class="status-dot" id="apiStatusDot"></span> <b id="apiStatusTxt">กำลังตรวจ…</b></td>
+          </tr>
+          <tr>
+            <td style="padding:7px 0;color:var(--muted)">ผู้ให้บริการ</td>
+            <td style="padding:7px 0"><b id="apiProvider">—</b></td>
+          </tr>
+          <tr>
+            <td style="padding:7px 0;color:var(--muted)">เครดิตคงเหลือ (สำรองจ่าย)</td>
+            <td style="padding:7px 0"><b id="upstreamBal" style="color:var(--green)">—</b></td>
+          </tr>
+          <tr>
+            <td style="padding:7px 0;color:var(--muted)">บริการที่ดึงได้</td>
+            <td style="padding:7px 0"><b id="apiServices">—</b> <span id="apiServicesAt" style="color:var(--muted);font-size:.8rem"></span></td>
+          </tr>
+          <tr>
+            <td style="padding:7px 0;color:var(--muted)">ติดต่อต้นทาง</td>
+            <td style="padding:7px 0"><a id="apiContactLink" href="#" target="_blank" rel="noopener" style="color:var(--brand);font-weight:600">—</a></td>
+          </tr>
+          <tr>
+            <td style="padding:7px 0;color:var(--muted)">ตรวจครั้งล่าสุด</td>
+            <td style="padding:7px 0" id="apiCheckedAt">—</td>
+          </tr>
+        </table>
+        <div class="btn-row" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <button class="btn btn-ghost btn-sm" id="apiTestBtn">ทดสอบการเชื่อมต่อ</button>
+          <a class="btn btn-primary btn-sm" id="topupUpstreamBtn" href="https://kmm-th.com/" target="_blank" rel="noopener">ไปเติมเครดิตต้นทาง (kmm-th.com)</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ตั้งค่า -->
+    <div class="view" id="tab-settings">
+      <div class="panel" style="max-width:640px">
+        <h3 style="margin-bottom:6px">สูตรกำไร</h3>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:16px">
+          ราคาขาย = ต้นทุน × (1 + กำไร%) แล้วปัดขึ้น 2 ตำแหน่ง — ถ้ากำไรต่อ 1,000 น้อยกว่ากำไรขั้นต่ำ จะใช้กำไรขั้นต่ำแทน ส่วนออเดอร์เล็ก (ยอดต่ำกว่าขั้นต่ำ) จะคิดราคาไล่ขึ้นจากครึ่งขั้นต่ำจนถึงขั้นต่ำพอดี — ยอดขยับตลอดเมื่อเพิ่มจำนวน
+        </p>
+        <div class="form-row">
+          <div class="field"><label>กำไรต่อรายการ (%)</label><input type="number" id="setMarkup" min="0" step="1" /></div>
+          <div class="field"><label>กำไรขั้นต่ำต่อ 1,000 หน่วย (บาท)</label><input type="number" id="setMinPer1000" min="0" step="0.1" /></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>ยอดสั่งซื้อขั้นต่ำ (บาท)</label><input type="number" id="setMinOrder" min="0" step="1" /></div>
+          <div class="field"><label>พร้อมเพย์รับเงิน (เบอร์/เลขบัตร)</label><input type="text" id="setPromptpay" placeholder="08x-xxx-xxxx หรือ 13 หลัก" /></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>ชื่อร้าน</label><input type="text" id="setSiteName" /></div>
+          <div class="field"><label>LINE ติดต่อ</label><input type="text" id="setLine" placeholder="@yourline" /></div>
+        </div>
+        <div class="field"><label>สโลแกนหน้าแรก (แถบประกาศวิ่ง)</label><input type="text" id="setTagline" /></div>
+        <h3 style="font-size:1rem;font-weight:600;margin:20px 0 10px">การเติมเงิน</h3>
+        <div class="form-row">
+          <div class="field"><label>ยอดเติมขั้นต่ำ (บาท)</label><input type="number" id="setTopupMin" min="1" step="1" /></div>
+          <div class="field"><label>ยอดเติมสูงสุด (บาท)</label><input type="number" id="setTopupMax" min="1" step="1" /></div>
+        </div>
+        <div class="field">
+          <label>ปุ่มยอดลัดให้ลูกค้ากดเลือก (คั่นด้วยเครื่องหมาย , สูงสุด 8 รายการ)</label>
+          <input type="text" id="setTopupAmounts" placeholder="เช่น 50,100,200,500,1000" />
+          <div class="hint">เปลี่ยนแล้วบันทึก ปุ่มที่หน้าเติมเงินของลูกค้าจะเปลี่ยนตามทันที</div>
+        </div>
+        <button class="btn btn-primary" id="saveSettingsBtn">บันทึกการตั้งค่า</button>
+      </div>
+      <div class="panel" style="max-width:640px;margin-top:18px">
+        <h3 style="margin-bottom:6px">การแจ้งเตือนบนมือถือ</h3>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:12px" id="pushStatus">กดปุ่มด้านล่างบนมือถือที่ติดตั้งแอปแอดมินไว้ — จากนั้นระบบจะส่งแจ้งเตือนทันทีเมื่อมีลูกค้าแจ้งโอนเติมเงิน หรือสั่งออเดอร์ใหม่ แม้ไม่ได้เปิดแอปไว้</p>
+        <div class="btn-row" style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary" id="pushEnableBtn">เปิดการแจ้งเตือนบนอุปกรณ์นี้</button>
+          <button class="btn btn-ghost" id="pushTestBtn">ส่งแจ้งเตือนทดสอบ</button>
+        </div>
+        <p style="color:var(--muted);font-size:.8rem;margin-top:10px">iPhone: ต้องเปิดจากไอคอนแอปบนหน้าจอโฮมเท่านั้น (ไม่ใช่ใน Safari) จึงจะขอสิทธิ์แจ้งเตือนได้</p>
+      </div>
+      <div class="panel" style="max-width:640px;margin-top:18px">
+        <h3 style="margin-bottom:6px">รายการบริการ</h3>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:14px" id="svcInfo">—</p>
+        <button class="btn btn-ghost" id="refreshSvcBtn">ดึงราคาล่าสุดจากผู้ให้บริการ</button>
+        <p style="color:var(--muted);font-size:.8rem;margin-top:8px">ระบบจะดึงราคาใหม่อัตโนมัติทุก 12 ชั่วโมง</p>
+      </div>
+    </div>
+
+    <!-- เติมเงิน -->
+    <div class="view" id="tab-topups">
+      <input type="text" class="tab-search" id="topupsSearch" placeholder="ค้นหา: รหัส, ผู้ใช้, อ้างอิง, สถานะ..." />
+      <div id="topupsBox"></div>
+    </div>
+
+    <!-- คำสั่งซื้อ -->
+    <div class="view" id="tab-orders">
+      <div class="btn-row" style="display:flex;justify-content:flex-end;margin-bottom:12px">
+        <button class="btn btn-ghost btn-sm" id="refreshOrdersBtn">รีเฟรชสถานะจากผู้ให้บริการ</button>
+      </div>
+      <input type="text" class="tab-search" id="ordersSearch" placeholder="ค้นหา: เลขที่, รหัสคำสั่งซื้อ, ผู้ใช้, บริการ, สถานะ..." />
+      <div id="ordersBox"></div>
+    </div>
+
+    <!-- สมาชิก -->
+    <div class="view" id="tab-users">
+      <div class="panel" style="margin-bottom:18px">
+        <h3 style="margin-bottom:10px">ปรับเครดิตสมาชิกด้วยมือ</h3>
+        <div class="form-row">
+          <div class="field"><label>ชื่อผู้ใช้</label><input type="text" id="creditUser" placeholder="username" /></div>
+          <div class="field"><label>จำนวนเงิน (+ เพิ่ม / - หัก)</label><input type="number" id="creditAmt" placeholder="เช่น 100 หรือ -50" step="0.01" /></div>
+        </div>
+        <button class="btn btn-primary btn-sm" id="creditBtn">ปรับเครดิต</button>
+      </div>
+      <input type="text" class="tab-search" id="usersSearch" placeholder="ค้นหา: รหัสสมาชิก, ชื่อผู้ใช้..." />
+      <div id="usersBox"></div>
+    </div>
+
+    <!-- ติดต่อจากลูกค้า -->
+    <div class="view" id="tab-contact">
+      <div class="panel" style="margin-bottom:14px">
+        <h3 style="margin-bottom:6px">ประกาศถึงลูกค้า</h3>
+        <p style="color:var(--muted);font-size:.86rem;margin-bottom:10px">พิมพ์ข้อความอัปเดต เช่น ปิดปรับปรุงบริการ / โปรโมชั่น / ข่าวร้าน — ลูกค้าจะเห็นบนหน้า "คำสั่งซื้อของฉัน" ทันที พร้อมป้าย "ใหม่" ตอนเพิ่งโพสต์</p>
+        <div class="ann-compose">
+          <textarea id="announceText" rows="2" maxlength="500" placeholder="พิมพ์ข้อความประกาศ เช่น ระบบอัปเดตสถานะทุก 1 นาที / วันที่ 10 ต.ค. บริการไลค์ IG ปิดปรับปรุงชั่วคราว"></textarea>
+          <div class="ann-compose-foot">
+            <label class="imp-toggle"><input type="checkbox" id="announceImportant" /><span>สำคัญ</span></label>
+            <button class="btn btn-primary btn-sm" id="announcePostBtn">โพสต์</button>
+          </div>
+        </div>
+        <div id="announceList" style="margin-top:14px"></div>
+      </div>
+      <div class="panel" style="margin-bottom:14px">
+        <h3 style="margin-bottom:6px">ข้อความจากลูกค้า</h3>
+        <p style="color:var(--muted);font-size:.86rem">ลูกค้าส่งมาจากปุ่มแชทที่หน้าเว็บ — มีข้อความใหม่ระบบจะแจ้งเตือนบนมือถือของคุณทันที ตอบกลับผ่านห้องแชทได้เลย</p>
+      </div>
+      <input type="text" class="tab-search" id="messagesSearch" placeholder="ค้นหา: เคส, ผู้ใช้, รหัสสมาชิก, อาการ..." />
+      <div id="messagesBox"></div>
+    </div>
+  </div>
+
+  <!-- Modal: แก้ไขสมาชิก -->
+  <div class="modal-backdrop" id="editUserModal">
+    <div class="modal" style="max-width:420px">
+      <button class="modal-close" data-close="editUserModal">&#10005;</button>
+      <h2>แก้ไขสมาชิก <span id="euUsername" class="mono" style="color:var(--brand)"></span></h2>
+      <p class="sub">เว้นช่องไหนว่างไว้ = ไม่เปลี่ยนส่วนนั้น</p>
+      <div class="field"><label>ชื่อแสดง</label><input type="text" id="euName" maxlength="60" /></div>
+      <div class="field"><label>เครดิต (ตั้งยอดใหม่)</label><input type="number" id="euBalance" min="0" step="0.01" /></div>
+      <div class="field"><label>รหัสผ่านใหม่ (ถ้าต้องการรีเซ็ต)</label><input type="text" id="euPassword" placeholder="เว้นว่าง = รหัสเดิม" /></div>
+      <button class="btn btn-primary" id="euSaveBtn" style="width:100%">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+
+  <!-- Modal: แก้ไขสถานะออร์เดอร์ -->
+  <div class="modal-backdrop" id="editOrderModal">
+    <div class="modal" style="max-width:400px">
+      <button class="modal-close" data-close="editOrderModal">&#10005;</button>
+      <h2>แก้ไขสถานะออร์เดอร์ <span id="eoId" class="mono" style="color:var(--brand)"></span></h2>
+      <p class="sub">แก้เป็น "คืนเงินแล้ว" หรือ "ยกเลิก" ระบบจะคืนเครดิตลูกค้าให้อัตโนมัติทันที</p>
+      <div class="field">
+        <label>สถานะ</label>
+        <select id="eoStatus">
+          <option value="Pending">รอดำเนินการ</option>
+          <option value="Processing">กำลังดำเนินการ</option>
+          <option value="Completed">สำเร็จแล้ว</option>
+          <option value="Partial">สำเร็จบางส่วน</option>
+          <option value="Canceled">ยกเลิก</option>
+          <option value="Refunded">คืนเงินแล้ว (คืนเครดิตลูกค้า)</option>
+          <option value="Error">ผิดพลาด</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="eoSaveBtn" style="width:100%">บันทึกสถานะ</button>
+    </div>
+  </div>
+
+  <!-- Modal: แก้ไขรายการเติมเงิน -->
+  <div class="modal-backdrop" id="editTopupModal">
+    <div class="modal" style="max-width:400px">
+      <button class="modal-close" data-close="editTopupModal">&#10005;</button>
+      <h2>แก้ไขรายการเติมเงิน <span id="etId" class="mono" style="color:var(--brand)"></span></h2>
+      <p class="sub">แก้ยอดให้ตรงกับที่ลูกค้าโอนจริงก่อนกดอนุมัติ</p>
+      <div class="field"><label>ยอดเงิน (บาท)</label><input type="number" id="etAmount" min="1" step="0.01" /></div>
+      <div class="field"><label>ข้อความอ้างอิง</label><input type="text" id="etRef" maxlength="100" /></div>
+      <button class="btn btn-primary" id="etSaveBtn" style="width:100%">บันทึกการแก้ไข</button>
+    </div>
+  </div>
+
+  <!-- Modal: แชทตอบกลับลูกค้า -->
+  <div class="modal-backdrop" id="ticketChatModal">
+    <div class="modal" style="max-width:460px">
+      <button class="modal-close" data-close="ticketChatModal">&#10005;</button>
+      <div id="ticketChatBody"></div>
+    </div>
+  </div>
+
+  <div id="toasts"></div>
+  <script src="/js/admin.js?v=51"></script>
+</body>
+</html>
